@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.susion.lifeclean.R
 import com.susion.lifeclean.model.Repo
-import com.susion.lifeclean.recyclerview.AdapterItemView
+import com.susion.lifeclean.extensions.recyclerview.AdapterItemView
 import kotlinx.android.synthetic.main.repo_view_item.view.*
 
 /**

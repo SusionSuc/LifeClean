@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
-import com.susion.lifeclean.recyclerview.AdapterItemView
+import com.susion.lifeclean.extensions.recyclerview.AdapterItemView
 
 /**
  * susionwang at 2019-12-09

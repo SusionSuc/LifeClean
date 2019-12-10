@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.susion.lifeclean.R
-import com.susion.lifeclean.recyclerview.*
+import com.susion.lifeclean.extensions.recyclerview.*
 import com.susion.lifeclean.view.SimpleInfo
 import com.susion.lifeclean.view.SimpleInfoView
 import com.susion.lifeclean.view.SimpleStringView

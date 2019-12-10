@@ -1,4 +1,4 @@
-package com.susion.lifeclean.lifepage
+package com.susion.lifeclean.extensions
 
 /**
  * susionwang at 2019-12-10

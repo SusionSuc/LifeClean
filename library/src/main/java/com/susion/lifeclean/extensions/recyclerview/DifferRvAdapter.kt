@@ -1,4 +1,4 @@
-package com.susion.lifeclean.recyclerview
+package com.susion.lifeclean.extensions.recyclerview
 
 import android.view.View
 import android.view.ViewGroup

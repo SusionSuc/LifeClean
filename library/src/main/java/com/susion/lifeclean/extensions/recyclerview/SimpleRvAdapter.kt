@@ -1,4 +1,4 @@
-package com.susion.lifeclean.recyclerview
+package com.susion.lifeclean.extensions.recyclerview
 
 import android.content.Context
 import android.view.View
@@ -29,11 +29,16 @@ class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T>) :
         return getItemType(data[position])
     }
 
-
-    fun refresh(datas:List<T>){
-        data.clear()
-        data.addAll(datas)
-        notifyDataSetChanged()
+    fun submitDatas(datas: List<T>, clear: Boolean = true) {
+        if (clear) {
+            data.clear()
+            data.addAll(datas)
+            notifyDataSetChanged()
+        } else {
+            val oldDataCount = data.size
+            data.addAll(datas)
+            notifyItemRangeInserted(oldDataCount, datas.size)
+        }
     }
 
     private val data2TypeMap = HashMap<String, Int?>()    //<classname, type>
@@ -47,6 +52,7 @@ class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T>) :
 
     /**
      * 会有异常， 必须提供一个 context的构造函数
+     *
      * */
     override fun createItem(type: Int): AdapterItemView<*> {
         val viewClass = type2ViewMap[type] ?: return FakeHolderItemView<Any>(context)

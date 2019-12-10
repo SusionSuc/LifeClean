@@ -1,4 +1,4 @@
-package com.susion.lifeclean.rx
+package com.susion.lifeclean.core
 
 import android.util.Log
 import androidx.lifecycle.Lifecycle
@@ -58,21 +58,20 @@ internal object GlobalRxDisposeManager {
 }
 
 //它对应一个生命周期组件，eg : Activity, 观察 Ac 的 destroy 事件
-internal class DestroyLifeCycleObserver(val lifeOwner: LifecycleOwner) : LifecycleObserver {
+internal class DestroyLifeCycleObserver(lifeOwner: LifecycleOwner?) : LifecycleObserver {
 
     private val compositeDisposable = CompositeDisposable()
     var requestRemoveLifecycleObserver: RequestRemoveLifecycleObserver? = null
+    var name = "undefine"
 
     init {
-        lifeOwner.lifecycle.addObserver(this)
+        lifeOwner?.lifecycle?.addObserver(this)
+        name = lifeOwner?.toString() ?: name
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
-        Log.d(
-            TAG,
-            "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${compositeDisposable.size()}"
-        )
+        Log.d(TAG, "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${compositeDisposable.size()}")
         compositeDisposable.clear()
         requestRemoveLifecycleObserver?.requestRemoveDestroyObserver(this)
     }
@@ -82,25 +81,24 @@ internal class DestroyLifeCycleObserver(val lifeOwner: LifecycleOwner) : Lifecyc
         compositeDisposable.add(disposable)
     }
 
-    fun getKey() = lifeOwner.toString()
+    fun getKey() = name
 }
 
 //它对应一个生命周期组件，eg : Activity, 观察 Ac 的 stop 事件
-internal class StopLifeCycleObserver(private val lifeOwner: LifecycleOwner) : LifecycleObserver {
+internal class StopLifeCycleObserver(lifeOwner: LifecycleOwner?) : LifecycleObserver {
 
     private val disposableList = ArrayList<Disposable>()
     var requestRemoveLifecycleObserver: RequestRemoveLifecycleObserver? = null
+    var name = "undefine"
 
     init {
-        lifeOwner.lifecycle.addObserver(this)
+        lifeOwner?.lifecycle?.addObserver(this)
+        name = lifeOwner?.toString() ?: name
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onDestroy() {
-        Log.d(
-            TAG,
-            "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${disposableList.size}"
-        )
+        Log.d(TAG, "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${disposableList.size}")
         disposableList.forEach {
             if (!it.isDisposed) {
                 it.dispose()
@@ -114,7 +112,7 @@ internal class StopLifeCycleObserver(private val lifeOwner: LifecycleOwner) : Li
         disposableList.add(disposable)
     }
 
-    fun getKey() = lifeOwner.toString()
+    fun getKey() = name
 
 }
 
@@ -124,13 +122,10 @@ internal interface RequestRemoveLifecycleObserver {
 }
 
 
-/**
- * kotlin 扩展函数， 方便使用
- * */
-
 //在 LifecycleOwner onDestroy 时释放 disposable
-fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner): Disposable {
-    var lifecycleObserver = GlobalRxDisposeManager.getDestroyObserver(lifeOwner.toString())
+fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner?): Disposable {
+    var lifecycleObserver =
+        GlobalRxDisposeManager.getDestroyObserver(lifeOwner.toString())
 
     if (lifecycleObserver == null) {
         lifecycleObserver = DestroyLifeCycleObserver(lifeOwner)
@@ -144,7 +139,8 @@ fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner): Disposable {
 
 //在 LifecycleOwner onStop 时释放 disposable
 fun Disposable.disposeOnStop(lifeOwner: LifecycleOwner): Disposable {
-    var lifecycleObserver = GlobalRxDisposeManager.getStopObserver(lifeOwner.toString())
+    var lifecycleObserver =
+        GlobalRxDisposeManager.getStopObserver(lifeOwner.toString())
 
     if (lifecycleObserver == null) {
         lifecycleObserver = StopLifeCycleObserver(lifeOwner)

@@ -1,24 +1,20 @@
-package com.susion.lifeclean.recyclerview
+package com.susion.lifeclean.extensions.recyclerview
 
 /**
  * susionwang at 2019-12-09
- * 数据 -> UI View】的映射
+ * 数据 -> Type -> View
  */
 interface AdapterUIMappingProtocol<T> {
 
-    /**
-     * 获取数据的type
-     */
+    //数据 ——> Type
     fun getItemType(data: T): Int
 
-    /**
-     * 根据type，获取一个 UI View
-     */
+    // Type -> View
     fun createItem(type: Int): AdapterItemView<*>
 }
 
 /**
- * 把数据设置给 UI View
+ * 把数据设置给View
  * */
 interface AdapterItemView<T> {
     fun bindData(data: T, position: Int)
