@@ -1,4 +1,4 @@
-package com.susion.lifeclean.page
+package com.susion.lifeclean.mvp
 
 import com.susion.lifeclean.core.LifePage
 
@@ -6,7 +6,7 @@ import com.susion.lifeclean.core.LifePage
 /**
  * create by susionwang at 2019-12-08
  */
-interface SimpleGitHubPageProtocol : LifePage {
+interface GitHubPageProtocol : LifePage {
 
     fun refreshDatas(datas: List<Any>, isLoadMore: Boolean)
 

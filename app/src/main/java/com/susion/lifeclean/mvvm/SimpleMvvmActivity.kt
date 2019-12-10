@@ -14,7 +14,7 @@ import com.susion.lifeclean.model.Repo
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.view.GitRepoView
 import com.susion.lifeclean.view.SimpleStringView
-import kotlinx.android.synthetic.main.activity_simple_mvvm.*
+import kotlinx.android.synthetic.main.page_git_repo.*
 
 /**
  * Android ViewModel 使用范例
@@ -37,21 +37,21 @@ class SimpleMvvmActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_simple_mvvm)
+        setContentView(R.layout.page_git_repo)
 
-        mvvmAcRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mvvmAcRv.adapter = adapter
+        gitRepoRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        gitRepoRv.adapter = adapter
 
         viewModel.pageStatus.observe(this, Observer<String> { pageStatus ->
             when (pageStatus) {
                 PageStatus.START_LOAD_PAGE_DATA, PageStatus.STAT_LOAD_MORE -> {
-                    mvvmAcProgress.visibility = View.VISIBLE
+                    gitRepoProgress.visibility = View.VISIBLE
                 }
                 PageStatus.END_LOAD_PAGE_DATA, PageStatus.END_LOAD_MORE -> {
-                    mvvmAcProgress.visibility = View.GONE
+                    gitRepoProgress.visibility = View.GONE
                 }
                 PageStatus.NET_ERROR -> {
-                    mvvmAcTvNetError.visibility = View.VISIBLE
+                    gitRepoNetError.visibility = View.VISIBLE
                     adapter.submitDatas(emptyList())
                 }
             }
@@ -64,7 +64,7 @@ class SimpleMvvmActivity : AppCompatActivity() {
 
         viewModel.loadSearchResult(searchWord, false)
 
-        mvvmAcRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        gitRepoRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val lastVisiblePos =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()

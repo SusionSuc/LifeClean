@@ -1,48 +1,43 @@
-package com.susion.lifeclean.mvp
+package com.susion.lifeclean.page
 
-import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.R
-import com.susion.lifeclean.core.Action
 import com.susion.lifeclean.core.LifePresenter
-import com.susion.lifeclean.core.State
 import com.susion.lifeclean.extensions.PageStatus
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.model.Repo
+import com.susion.lifeclean.mvp.GitHubPageProtocol
+import com.susion.lifeclean.mvp.GithubPresenter
+import com.susion.lifeclean.mvp.LoadData
+import com.susion.lifeclean.mvp.SimpleMvpStatus
 import com.susion.lifeclean.view.GitRepoView
 import com.susion.lifeclean.view.SimpleStringView
-import kotlinx.android.synthetic.main.page_git_repo.*
+import kotlinx.android.synthetic.main.page_git_repo.view.*
 
 /**
- * 该页面发出的事件
- * */
-class LoadData(val searchWord: String, val isLoadMore: Boolean) : Action
-
-/**
- * 该页面需要的状态
- * */
-class SimpleMvpStatus(val currentPageSize: Int) : State
-
-class SimpleMvpActivity : AppCompatActivity(), GitHubPageProtocol {
+ * susionwang at 2019-12-10
+ */
+class GitRepoPage(context: AppCompatActivity) : GitHubPageProtocol, FrameLayout(context) {
 
     private val presenter: LifePresenter by lazy {
-        LifeClean.createPresenter<GithubPresenter, GitHubPageProtocol>(this, this)
+        LifeClean.createPresenter<GithubPresenter, GitHubPageProtocol>(context, this)
     }
 
-    private val adapter = SimpleRvAdapter(this, ArrayList()).apply {
+    private val adapter = SimpleRvAdapter(context, ArrayList()).apply {
         registerMapping(String::class.java, SimpleStringView::class.java)
         registerMapping(Repo::class.java, GitRepoView::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.page_git_repo)
-        gitRepoRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    init {
+        LayoutInflater.from(context).inflate(R.layout.page_git_repo, this)
+        gitRepoRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         gitRepoRv.adapter = adapter
         presenter.dispatch(LoadData("Android", false))
         gitRepoRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -61,7 +56,7 @@ class SimpleMvpActivity : AppCompatActivity(), GitHubPageProtocol {
 
         //查询数据状态
         val currentPageSize = presenter.getStatus<SimpleMvpStatus>()?.currentPageSize ?: 0
-        Toast.makeText(this, "当前页 : $currentPageSize", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "当前页 : $currentPageSize", Toast.LENGTH_SHORT).show()
     }
 
     override fun refreshPageStatus(status: String) {

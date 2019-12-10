@@ -13,10 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.susion.lifeclean.adapter.AdapterTestActivity" />
-        <activity android:name="com.susion.lifeclean.mvvm.SimpleMvvmActivity" />
-        <activity android:name="com.susion.lifeclean.mvp.SimpleMvpActivity" />
-        <activity android:name="com.susion.lifeclean.MainActivity">
+        <activity android:name=".page.SimplePageContainerActivity"></activity>
+        <activity android:name=".adapter.AdapterTestActivity" />
+        <activity android:name=".mvvm.SimpleMvvmActivity" />
+        <activity android:name=".mvp.SimpleMvpActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
