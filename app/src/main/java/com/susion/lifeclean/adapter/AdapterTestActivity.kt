@@ -5,9 +5,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.susion.lifeclean.R
 import com.susion.lifeclean.extensions.recyclerview.*
-import com.susion.lifeclean.view.SimpleInfo
-import com.susion.lifeclean.view.SimpleInfoView
-import com.susion.lifeclean.view.SimpleStringView
+import com.susion.lifeclean.adapter.view.SimpleInfo
+import com.susion.lifeclean.adapter.view.SimpleInfoView
+import com.susion.lifeclean.adapter.view.SimpleStringView
 import kotlinx.android.synthetic.main.activity_adapter_test.*
 
 /**
@@ -56,7 +56,7 @@ class AdapterTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_adapter_test)
-
+        supportActionBar?.title = "Adapter使用范例"
         adapterAcRootRv.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         adapterAcRootRv.adapter = adapter

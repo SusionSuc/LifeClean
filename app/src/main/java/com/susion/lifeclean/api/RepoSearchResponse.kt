@@ -16,7 +16,6 @@
 
 package com.susion.lifeclean.api
 
-import com.susion.lifeclean.model.Repo
 import com.google.gson.annotations.SerializedName
 
 /**

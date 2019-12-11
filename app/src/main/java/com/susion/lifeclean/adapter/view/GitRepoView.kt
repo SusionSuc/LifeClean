@@ -1,4 +1,4 @@
-package com.susion.lifeclean.view
+package com.susion.lifeclean.adapter.view
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.susion.lifeclean.R
-import com.susion.lifeclean.model.Repo
+import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.extensions.recyclerview.AdapterItemView
 import kotlinx.android.synthetic.main.repo_view_item.view.*
 

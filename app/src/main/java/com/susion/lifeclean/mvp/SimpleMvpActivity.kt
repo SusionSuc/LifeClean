@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.susion.lifeclean.arc.GitHubPageProtocol
+import com.susion.lifeclean.arc.GithubPresenter
 import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.R
 import com.susion.lifeclean.core.Action
@@ -13,9 +15,9 @@ import com.susion.lifeclean.core.LifePresenter
 import com.susion.lifeclean.core.State
 import com.susion.lifeclean.extensions.PageStatus
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
-import com.susion.lifeclean.model.Repo
-import com.susion.lifeclean.view.GitRepoView
-import com.susion.lifeclean.view.SimpleStringView
+import com.susion.lifeclean.api.Repo
+import com.susion.lifeclean.adapter.view.GitRepoView
+import com.susion.lifeclean.adapter.view.SimpleStringView
 import kotlinx.android.synthetic.main.page_git_repo.*
 
 /**
@@ -42,6 +44,7 @@ class SimpleMvpActivity : AppCompatActivity(), GitHubPageProtocol {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page_git_repo)
+        supportActionBar?.title = "MVP For Activity"
         gitRepoRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         gitRepoRv.adapter = adapter
         presenter.dispatch(LoadData("Android", false))
@@ -49,7 +52,7 @@ class SimpleMvpActivity : AppCompatActivity(), GitHubPageProtocol {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val lastVisiblePos =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                if (lastVisiblePos >= adapter.data.size - 1) {
+                if (lastVisiblePos >= adapter.data.size - 1 && gitRepoProgress.visibility == View.GONE) {
                     presenter.dispatch(LoadData("Android", true))
                 }
             }

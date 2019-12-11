@@ -1,4 +1,4 @@
-package com.susion.lifeclean.mvp
+package com.susion.lifeclean.arc
 
 import com.susion.lifeclean.api.GithubService
 import com.susion.lifeclean.core.Action
@@ -6,13 +6,15 @@ import com.susion.lifeclean.core.LifePresenter
 import com.susion.lifeclean.core.State
 import com.susion.lifeclean.core.disposeOnDestroy
 import com.susion.lifeclean.extensions.PageStatus
+import com.susion.lifeclean.mvp.LoadData
+import com.susion.lifeclean.mvp.SimpleMvpStatus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 /**
  * create by susionwang at 2019-12-08
  */
-class GithubPresenter(val view: GitHubPageProtocol) : LifePresenter(view) {
+class GithubPresenter(val view: GitHubPageProtocol) : LifePresenter() {
 
     private val apiService = GithubService.create()
     private val IN_QUALIFIER = "in:name,description"

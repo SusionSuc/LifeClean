@@ -1,4 +1,4 @@
-package com.susion.lifeclean.mvvm
+package com.susion.lifeclean.arc
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData

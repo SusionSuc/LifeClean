@@ -1,9 +1,9 @@
 package com.susion.lifeclean.mvvm
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,39 +11,34 @@ import com.susion.lifeclean.arc.GithubViewModel
 import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.R
 import com.susion.lifeclean.extensions.PageStatus
-import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
+import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.adapter.view.GitRepoView
 import com.susion.lifeclean.adapter.view.SimpleStringView
-import kotlinx.android.synthetic.main.page_git_repo.*
+import kotlinx.android.synthetic.main.page_git_repo.view.*
 
 /**
- * Android ViewModel 使用范例
- * */
-class SimpleMvvmActivity : AppCompatActivity() {
+ * susionwang at 2019-12-10
+ */
+class GitRepoMvvmPage(context: AppCompatActivity) : FrameLayout(context) {
 
-    private val TAG = javaClass.simpleName
+    private val searchWord = "Android"
 
     // 推荐使用 by lazy, 这样不需要每次使用变量时都需要判null
     private val viewModel by lazy {
-        LifeClean.createViewModel<GithubViewModel>(this)
+        LifeClean.createViewModel<GithubViewModel>(context)
     }
 
-    private val adapter = SimpleRvAdapter(this, ArrayList()).apply {
+    private val adapter = SimpleRvAdapter(context, ArrayList()).apply {
         registerMapping(String::class.java, SimpleStringView::class.java)
         registerMapping(Repo::class.java, GitRepoView::class.java)
     }
 
-    private val searchWord = "Android"
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.page_git_repo)
-        supportActionBar?.title = "MVVM For Activity"
-        gitRepoRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    init {
+        LayoutInflater.from(context).inflate(R.layout.page_git_repo, this)
+        gitRepoRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         gitRepoRv.adapter = adapter
-
-        viewModel.pageStatus.observe(this, Observer<String> { pageStatus ->
+        viewModel.pageStatus.observe(context, Observer<String> { pageStatus ->
             when (pageStatus) {
                 PageStatus.START_LOAD_PAGE_DATA, PageStatus.STAT_LOAD_MORE -> {
                     gitRepoProgress.visibility = View.VISIBLE
@@ -58,8 +53,7 @@ class SimpleMvvmActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.dataList.observe(this, Observer<List<Any>> {
-            Log.d(TAG, "data change : $it")
+        viewModel.dataList.observe(context, Observer<List<Any>> {
             adapter.submitDatas(it, false)
         })
 

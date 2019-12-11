@@ -1,4 +1,4 @@
-package com.susion.lifeclean.view
+package com.susion.lifeclean.adapter.view
 
 import android.content.Context
 import android.util.TypedValue
@@ -10,17 +10,16 @@ import com.susion.lifeclean.extensions.recyclerview.AdapterItemView
  * susionwang at 2019-12-09
  */
 
-// item type 2
-class SimpleInfo(val name: String)
-
-class SimpleInfoView(context: Context) : AdapterItemView<SimpleInfo>, TextView(context) {
+class SimpleStringView(context: Context) : AdapterItemView<String>, TextView(context) {
 
     init {
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17f)
         layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100)
     }
 
-    override fun bindData(data: SimpleInfo, position: Int) {
-        text = data.name
+    override fun bindData(data: String, position: Int) {
+        text = data
     }
+
 }
+

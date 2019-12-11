@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.susion.lifeclean.adapter.AdapterTestActivity
 import com.susion.lifeclean.mvp.SimpleMvpActivity
 import com.susion.lifeclean.mvvm.SimpleMvvmActivity
-import com.susion.lifeclean.page.SimplePageContainerActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +27,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         mainAcTvSimpleMvpPage.setOnClickListener {
-            startActivity(Intent(this, SimplePageContainerActivity::class.java))
+            SimplePageContainerActivity.start(this, SimplePageContainerActivity.MVP)
+        }
+
+        mainAcTvSimpleMvvmPage.setOnClickListener {
+            SimplePageContainerActivity.start(this, SimplePageContainerActivity.MVVM)
+        }
+
+        mainAcTvSimpleLifePage.setOnClickListener {
+            SimplePageContainerActivity.start(this, SimplePageContainerActivity.LIFE)
         }
 
     }

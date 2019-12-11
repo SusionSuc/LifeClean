@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.susion.lifeclean.model
+package com.susion.lifeclean.api
 
 import com.google.gson.annotations.SerializedName
 

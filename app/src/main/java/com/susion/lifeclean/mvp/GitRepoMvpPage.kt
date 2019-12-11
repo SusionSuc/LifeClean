@@ -1,4 +1,4 @@
-package com.susion.lifeclean.page
+package com.susion.lifeclean.mvp
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,22 +12,20 @@ import com.susion.lifeclean.R
 import com.susion.lifeclean.core.LifePresenter
 import com.susion.lifeclean.extensions.PageStatus
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
-import com.susion.lifeclean.model.Repo
-import com.susion.lifeclean.mvp.GitHubPageProtocol
-import com.susion.lifeclean.mvp.GithubPresenter
-import com.susion.lifeclean.mvp.LoadData
-import com.susion.lifeclean.mvp.SimpleMvpStatus
-import com.susion.lifeclean.view.GitRepoView
-import com.susion.lifeclean.view.SimpleStringView
+import com.susion.lifeclean.api.Repo
+import com.susion.lifeclean.arc.GitHubPageProtocol
+import com.susion.lifeclean.arc.GithubPresenter
+import com.susion.lifeclean.adapter.view.GitRepoView
+import com.susion.lifeclean.adapter.view.SimpleStringView
 import kotlinx.android.synthetic.main.page_git_repo.view.*
 
 /**
  * susionwang at 2019-12-10
  */
-class GitRepoPage(context: AppCompatActivity) : GitHubPageProtocol, FrameLayout(context) {
+class GitRepoMvpPage(context: AppCompatActivity) : GitHubPageProtocol, FrameLayout(context) {
 
     private val presenter: LifePresenter by lazy {
-        LifeClean.createPresenter<GithubPresenter, GitHubPageProtocol>(context, this)
+        LifeClean.createPresenter<GithubPresenter,GitHubPageProtocol>(context, this)
     }
 
     private val adapter = SimpleRvAdapter(context, ArrayList()).apply {
@@ -44,7 +42,7 @@ class GitRepoPage(context: AppCompatActivity) : GitHubPageProtocol, FrameLayout(
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val lastVisiblePos =
                     (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                if (lastVisiblePos >= adapter.data.size - 1) {
+                if (lastVisiblePos >= adapter.data.size - 1 &&  gitRepoProgress.visibility == View.GONE) {
                     presenter.dispatch(LoadData("Android", true))
                 }
             }
@@ -53,7 +51,6 @@ class GitRepoPage(context: AppCompatActivity) : GitHubPageProtocol, FrameLayout(
 
     override fun refreshDatas(datas: List<Any>, isLoadMore: Boolean) {
         adapter.submitDatas(datas, !isLoadMore)
-
         //查询数据状态
         val currentPageSize = presenter.getStatus<SimpleMvpStatus>()?.currentPageSize ?: 0
         Toast.makeText(context, "当前页 : $currentPageSize", Toast.LENGTH_SHORT).show()

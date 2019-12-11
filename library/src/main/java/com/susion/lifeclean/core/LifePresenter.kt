@@ -5,8 +5,10 @@ import java.lang.ref.WeakReference
 
 /**
  * susionwang at 2019-12-10
+ *
+ * Presenter一般都需要一个Page, 可以更新UI
  */
-abstract class LifePresenter(lifePage: LifePage?) : Presenter {
+abstract class LifePresenter(lifePage: LifePage? = null) : Presenter {
 
     private var lifeOwnerReference = WeakReference<LifecycleOwner>(null)
 
