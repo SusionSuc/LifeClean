@@ -1,4 +1,4 @@
-package com.susion.lifeclean.extensions
+package com.susion.lifeclean.extensions.protocol
 
 /**
  * susionwang at 2019-12-10

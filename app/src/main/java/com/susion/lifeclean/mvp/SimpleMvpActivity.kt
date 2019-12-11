@@ -6,18 +6,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.susion.lifeclean.arc.GitHubPageProtocol
 import com.susion.lifeclean.arc.GithubPresenter
 import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.R
 import com.susion.lifeclean.core.Action
 import com.susion.lifeclean.core.LifePresenter
 import com.susion.lifeclean.core.State
-import com.susion.lifeclean.extensions.PageStatus
+import com.susion.lifeclean.extensions.protocol.PageStatus
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.adapter.view.GitRepoView
 import com.susion.lifeclean.adapter.view.SimpleStringView
+import com.susion.lifeclean.extensions.protocol.SimplePageProtocol
 import kotlinx.android.synthetic.main.page_git_repo.*
 
 /**
@@ -30,10 +30,10 @@ class LoadData(val searchWord: String, val isLoadMore: Boolean) : Action
  * */
 class SimpleMvpStatus(val currentPageSize: Int) : State
 
-class SimpleMvpActivity : AppCompatActivity(), GitHubPageProtocol {
+class SimpleMvpActivity : AppCompatActivity(), SimplePageProtocol {
 
     private val presenter: LifePresenter by lazy {
-        LifeClean.createPresenter<GithubPresenter, GitHubPageProtocol>(this, this)
+        LifeClean.createPresenter<GithubPresenter, SimplePageProtocol>(this, this)
     }
 
     private val adapter = SimpleRvAdapter(this, ArrayList()).apply {

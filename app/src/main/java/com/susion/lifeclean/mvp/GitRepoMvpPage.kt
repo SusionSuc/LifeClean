@@ -10,22 +10,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.R
 import com.susion.lifeclean.core.LifePresenter
-import com.susion.lifeclean.extensions.PageStatus
+import com.susion.lifeclean.extensions.protocol.PageStatus
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.api.Repo
-import com.susion.lifeclean.arc.GitHubPageProtocol
 import com.susion.lifeclean.arc.GithubPresenter
 import com.susion.lifeclean.adapter.view.GitRepoView
 import com.susion.lifeclean.adapter.view.SimpleStringView
+import com.susion.lifeclean.extensions.protocol.SimplePageProtocol
 import kotlinx.android.synthetic.main.page_git_repo.view.*
 
 /**
  * susionwang at 2019-12-10
  */
-class GitRepoMvpPage(context: AppCompatActivity) : GitHubPageProtocol, FrameLayout(context) {
+class GitRepoMvpPage(context: AppCompatActivity) : SimplePageProtocol, FrameLayout(context) {
 
     private val presenter: LifePresenter by lazy {
-        LifeClean.createPresenter<GithubPresenter,GitHubPageProtocol>(context, this)
+        LifeClean.createPresenter<GithubPresenter,SimplePageProtocol>(context, this)
     }
 
     private val adapter = SimpleRvAdapter(context, ArrayList()).apply {

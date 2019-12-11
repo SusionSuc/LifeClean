@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.susion.lifeclean.api.GithubService
 import com.susion.lifeclean.core.LifeViewModel
-import com.susion.lifeclean.extensions.PageStatus
+import com.susion.lifeclean.extensions.protocol.PageStatus
 import com.susion.lifeclean.core.disposeOnDestroy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

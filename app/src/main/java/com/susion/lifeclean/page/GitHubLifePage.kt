@@ -17,7 +17,7 @@ import com.susion.lifeclean.adapter.view.SimpleStringView
 import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.arc.GithubViewModel
 import com.susion.lifeclean.core.LifePage
-import com.susion.lifeclean.extensions.PageStatus
+import com.susion.lifeclean.extensions.protocol.PageStatus
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import kotlinx.android.synthetic.main.page_git_repo.view.*
 
@@ -32,7 +32,7 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context), LifePag
 
     // 推荐使用 by lazy, 这样不需要每次使用变量时都需要判null
     private val viewModel by lazy {
-        LifeClean.createViewModel<GithubViewModel>(context)
+        LifeClean.createLifeViewModel<GithubViewModel>(context)
     }
 
     private val adapter = SimpleRvAdapter(context, ArrayList()).apply {

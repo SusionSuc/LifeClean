@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.susion.lifeclean.arc.GithubViewModel
 import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.R
-import com.susion.lifeclean.extensions.PageStatus
+import com.susion.lifeclean.extensions.protocol.PageStatus
 import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.adapter.view.GitRepoView
@@ -26,7 +26,7 @@ class SimpleMvvmActivity : AppCompatActivity() {
 
     // 推荐使用 by lazy, 这样不需要每次使用变量时都需要判null
     private val viewModel by lazy {
-        LifeClean.createViewModel<GithubViewModel>(this)
+        LifeClean.createLifeViewModel<GithubViewModel>(this)
     }
 
     private val adapter = SimpleRvAdapter(this, ArrayList()).apply {

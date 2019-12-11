@@ -15,9 +15,16 @@ import com.susion.lifeclean.core.*
 object LifeClean {
 
     /**
-     * 实例化的类必须继承自 : [LifeViewModel] or [LifeAndroidViewModel]
+     * 实例化ViewModel
      * */
     inline fun <reified T : ViewModel> createViewModel(activity: AppCompatActivity): T {
+        return ViewModelProviders.of(activity).get(T::class.java)
+    }
+
+    /**
+     * 实例化的类必须继承自 : [LifeViewModel] or [LifeAndroidViewModel]
+     * */
+    inline fun <reified T : ViewModel> createLifeViewModel(activity: AppCompatActivity): T {
         return ViewModelProviders.of(activity, ViewModelFactory(activity)).get(T::class.java)
     }
 
