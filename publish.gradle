@@ -5,7 +5,7 @@ publish {
     repoName = 'arch'
     groupId = 'com.susion'
     artifactId = ARTIFACT_ID
-    publishVersion = '1.0.0-beat'
+    publishVersion = '1.0.1'
     desc = 'android mvp or mvvm with lifecycle'
     website = 'https://github.com/SusionSuc/LifeClean'
 }

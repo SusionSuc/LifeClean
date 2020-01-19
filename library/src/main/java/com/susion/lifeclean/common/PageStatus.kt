@@ -19,7 +19,9 @@ object PageStatus {
     val TOAST = "show_toast"
     val PRIVACY_DATA = "privacy_data"
     val CONTENT_DELETE = "content_delete"
+    val ERROR = "error"
     val UNDEFINE = "undefine"
+
 
     /**
      * 扩展页面状态

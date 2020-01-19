@@ -17,8 +17,4 @@ abstract class LifePresenter : Presenter {
         lifeOwnerReference = WeakReference(lifecycleOwner)
     }
 
-    override fun <T : State> getStatus(): T? {
-        return null
-    }
-
 }

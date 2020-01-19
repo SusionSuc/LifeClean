@@ -28,8 +28,8 @@ class GithubPresenter(val view: SimpleRvPageProtocol) : LifePresenter() {
         }
     }
 
-    override fun <T : State> getStatus(): T? {
-        return SimpleRvPageProtocol.SimpleMvpStatus(page) as? T
+    override fun <T : State> getState(): T? {
+        return SimpleRvPageProtocol.PageState(page) as? T
     }
 
     private fun loadSearchResult(query: String, isLoadMore: Boolean = false) {

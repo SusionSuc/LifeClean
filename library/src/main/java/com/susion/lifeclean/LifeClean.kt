@@ -8,10 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 
 /**
- * susionwang at 2019-12-10C
+ * susionwang at 2019-12-10
  *
  * 提供基于[AppCompatActivity]的 Lifecycle Component
- *
  */
 object LifeClean {
 
@@ -33,19 +32,13 @@ object LifeClean {
     }
 
     /**
-     * 实例化的类必须继承自[LifePage]  && 含有 construct(context) 的构造函数
+     * 实例化一个基于View构建的页面
+     * 必须含有 construct(context) 的构造函数
      * */
     inline fun <reified T : LifePage> createPage(activity: AppCompatActivity): T {
         return PageFactory(activity).create(T::class.java)
     }
 
-    /**
-     *实例化不带有[LifePage]的[LifePresenter]
-     * */
-    inline fun <reified T : LifePresenter> createPresenter(activity: AppCompatActivity): T {
-        return PresenterFactory(activity).create(T::class.java)
-    }
-    
     /**
      * 实例化带有一个任意类型参数的[LifePresenter]
      * */
@@ -126,16 +119,6 @@ object LifeClean {
      * 构造Presenter
      * */
     class PresenterFactory(val activity: AppCompatActivity) {
-
-        inline fun <reified T : LifePresenter> create(presenterClass: Class<T>): T {
-            if (LifePresenter::class.java.isAssignableFrom(presenterClass)) {
-                val obj = presenterClass.getConstructor().newInstance()
-                (obj as LifePresenter).injectLifeOwner(activity)
-                return obj
-            }
-            throw IllegalArgumentException("Page Must Is Child of LifePage")
-        }
-
 
         inline fun <reified T : LifePresenter, reified P : Any> create(
             presenterClass: Class<T>,

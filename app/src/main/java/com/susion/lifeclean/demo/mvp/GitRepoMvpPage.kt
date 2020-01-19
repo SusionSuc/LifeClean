@@ -28,11 +28,7 @@ class GitRepoMvpPage(context: AppCompatActivity) : SimpleRvPageProtocol, FrameLa
         LifeClean.createPresenter<GithubPresenter, SimpleRvPageProtocol>(context, this)
     }
 
-    private val adapter = SimpleRvAdapter(
-        context,
-        ArrayList()
-    )
-        .apply {
+    private val adapter = SimpleRvAdapter<Any>(context).apply {
         registerMapping(String::class.java, SimpleStringView::class.java)
         registerMapping(Repo::class.java, GitRepoView::class.java)
     }
@@ -71,7 +67,7 @@ class GitRepoMvpPage(context: AppCompatActivity) : SimpleRvPageProtocol, FrameLa
         adapter.submitDatas(datas, !isLoadMore)
         //查询数据状态
         val currentPageSize =
-            presenter.getStatus<SimpleRvPageProtocol.SimpleMvpStatus>()?.currentPageSize ?: 0
+            presenter.getState<SimpleRvPageProtocol.PageState>()?.currentPageSize ?: 0
         Toast.makeText(context, "当前页 : $currentPageSize", Toast.LENGTH_SHORT).show()
     }
 

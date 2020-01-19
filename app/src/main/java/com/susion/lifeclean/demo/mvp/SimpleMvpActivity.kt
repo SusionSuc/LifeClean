@@ -56,7 +56,7 @@ class SimpleMvpActivity : AppCompatActivity(),
 
         //查询数据状态
         val currentPageSize =
-            presenter.getStatus<SimpleRvPageProtocol.SimpleMvpStatus>()?.currentPageSize ?: 0
+            presenter.getState<SimpleRvPageProtocol.PageState>()?.currentPageSize ?: 0
         Toast.makeText(this, "当前页 : $currentPageSize", Toast.LENGTH_SHORT).show()
     }
 

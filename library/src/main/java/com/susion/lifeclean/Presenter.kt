@@ -13,6 +13,8 @@ interface Presenter {
     /**
      * view 希望获得的数据状态
      * */
-    fun <T : State> getStatus(): T?
+    fun <T : State> getState(): T? {
+        return null
+    }
 
 }

@@ -17,7 +17,7 @@ interface SimpleRvPageProtocol {
     /**
      * 该页面需要的状态
      * */
-    class SimpleMvpStatus(val currentPageSize: Int) : State
+    class PageState(val currentPageSize: Int) : State
 
     fun refreshDatas(datas: List<Any>, isLoadMore: Boolean = false, extra: Any = Any())
 

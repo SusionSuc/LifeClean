@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
  * 1. 快速注册映射的Adapter
  * 2. 只支持带有默认构造函数的View
  */
-class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T>) :
+class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T> = ArrayList<T>()) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     AdapterUIMappingProtocol<T> {
 
