@@ -8,7 +8,7 @@ import android.view.ViewGroup
  * create by susion
  * 简单的做数据 到 UI 的映射
  */
-abstract class CommonRvAdapter<T>(val data: MutableList<T>) :
+abstract class CommonRvAdapter<T>(val data: MutableList<T> = ArrayList()) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     AdapterUIMappingProtocol<T> {
 
