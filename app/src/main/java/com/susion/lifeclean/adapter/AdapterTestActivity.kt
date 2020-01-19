@@ -3,8 +3,8 @@ package com.susion.lifeclean.adapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.susion.lifeclean.common.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.R
-import com.susion.lifeclean.extensions.recyclerview.*
 import com.susion.lifeclean.adapter.view.SimpleInfo
 import com.susion.lifeclean.adapter.view.SimpleInfoView
 import com.susion.lifeclean.adapter.view.SimpleStringView

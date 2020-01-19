@@ -2,10 +2,10 @@ package com.susion.lifeclean.arc
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.susion.lifeclean.common.PageStatus
+import com.susion.lifeclean.LifeViewModel
+import com.susion.lifeclean.rx.disposeOnDestroy
 import com.susion.lifeclean.api.GithubService
-import com.susion.lifeclean.core.LifeViewModel
-import com.susion.lifeclean.extensions.protocol.PageStatus
-import com.susion.lifeclean.core.disposeOnDestroy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -42,7 +42,7 @@ class GithubViewModel : LifeViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
                 pageStatus.value =
-                    if (isLoadMore) PageStatus.STAT_LOAD_MORE else PageStatus.START_LOAD_PAGE_DATA
+                    if (isLoadMore) PageStatus.START_LOAD_MORE else PageStatus.START_LOAD_PAGE_DATA
             }.doOnTerminate {
                 //doOnFinally : https://raw.githubusercontent.com/wiki/ReactiveX/RxJava/images/rx-operators/doFinally.o.png
                 //doOnTerminate : https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/doOnTerminate.o.png  -> 在onError之前调用

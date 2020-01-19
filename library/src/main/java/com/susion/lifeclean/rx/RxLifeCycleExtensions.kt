@@ -1,4 +1,4 @@
-package com.susion.lifeclean.core
+package com.susion.lifeclean.rx
 
 import android.util.Log
 import androidx.lifecycle.Lifecycle
@@ -12,7 +12,7 @@ import java.util.*
 /**
  * 及时释放 Rx java 相关 Disposable
  *
- * 依托于 [LifecycleOwner]
+ * 依托于 [LifecycleOwner], 解决RxJava内存泄漏的问题
  * */
 private val TAG = "RxLifeCycle"
 
@@ -71,7 +71,10 @@ internal class DestroyLifeCycleObserver(lifeOwner: LifecycleOwner?) : LifecycleO
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
-        Log.d(TAG, "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${compositeDisposable.size()}")
+        Log.d(
+            TAG,
+            "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${compositeDisposable.size()}"
+        )
         compositeDisposable.clear()
         requestRemoveLifecycleObserver?.requestRemoveDestroyObserver(this)
     }
@@ -98,7 +101,10 @@ internal class StopLifeCycleObserver(lifeOwner: LifecycleOwner?) : LifecycleObse
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onDestroy() {
-        Log.d(TAG, "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${disposableList.size}")
+        Log.d(
+            TAG,
+            "${getKey()} OnLifecycleEvent ON_DESTROY , disposableList.size : ${disposableList.size}"
+        )
         disposableList.forEach {
             if (!it.isDisposed) {
                 it.dispose()

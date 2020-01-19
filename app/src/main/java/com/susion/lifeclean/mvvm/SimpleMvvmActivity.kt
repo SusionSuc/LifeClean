@@ -7,12 +7,12 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.susion.lifeclean.arc.GithubViewModel
 import com.susion.lifeclean.LifeClean
+import com.susion.lifeclean.common.PageStatus
+import com.susion.lifeclean.common.recyclerview.SimpleRvAdapter
+import com.susion.lifeclean.arc.GithubViewModel
 import com.susion.lifeclean.R
-import com.susion.lifeclean.extensions.protocol.PageStatus
 import com.susion.lifeclean.api.Repo
-import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import com.susion.lifeclean.adapter.view.GitRepoView
 import com.susion.lifeclean.adapter.view.SimpleStringView
 import kotlinx.android.synthetic.main.page_git_repo.*
@@ -29,7 +29,10 @@ class SimpleMvvmActivity : AppCompatActivity() {
         LifeClean.createLifeViewModel<GithubViewModel>(this)
     }
 
-    private val adapter = SimpleRvAdapter(this, ArrayList()).apply {
+    private val adapter = SimpleRvAdapter(
+        this,
+        ArrayList()
+    ).apply {
         registerMapping(String::class.java, SimpleStringView::class.java)
         registerMapping(Repo::class.java, GitRepoView::class.java)
     }
@@ -45,7 +48,7 @@ class SimpleMvvmActivity : AppCompatActivity() {
 
         viewModel.pageStatus.observe(this, Observer<String> { pageStatus ->
             when (pageStatus) {
-                PageStatus.START_LOAD_PAGE_DATA, PageStatus.STAT_LOAD_MORE -> {
+                PageStatus.START_LOAD_PAGE_DATA, PageStatus.START_LOAD_MORE -> {
                     gitRepoProgress.visibility = View.VISIBLE
                 }
                 PageStatus.END_LOAD_PAGE_DATA, PageStatus.END_LOAD_MORE -> {

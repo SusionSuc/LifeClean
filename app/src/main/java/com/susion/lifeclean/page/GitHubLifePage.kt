@@ -11,21 +11,22 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.susion.lifeclean.LifeClean
+import com.susion.lifeclean.common.PageStatus
+import com.susion.lifeclean.common.recyclerview.SimpleRvAdapter
+import com.susion.lifeclean.LifePage
 import com.susion.lifeclean.R
 import com.susion.lifeclean.adapter.view.GitRepoView
 import com.susion.lifeclean.adapter.view.SimpleStringView
 import com.susion.lifeclean.api.Repo
 import com.susion.lifeclean.arc.GithubViewModel
-import com.susion.lifeclean.core.LifePage
-import com.susion.lifeclean.extensions.protocol.PageStatus
-import com.susion.lifeclean.extensions.recyclerview.SimpleRvAdapter
 import kotlinx.android.synthetic.main.page_git_repo.view.*
 
 /**
  * susionwang at 2019-12-11
  * 带有生命周期的Page, 可以接收[Activity]的生命周期事件
  */
-class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context), LifePage {
+class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),
+    LifePage {
 
     private val TAG = javaClass.simpleName
     private val searchWord = "Android"
@@ -35,7 +36,11 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context), LifePag
         LifeClean.createLifeViewModel<GithubViewModel>(context)
     }
 
-    private val adapter = SimpleRvAdapter(context, ArrayList()).apply {
+    private val adapter = SimpleRvAdapter(
+        context,
+        ArrayList()
+    )
+        .apply {
         registerMapping(String::class.java, SimpleStringView::class.java)
         registerMapping(Repo::class.java, GitRepoView::class.java)
     }
@@ -46,7 +51,7 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context), LifePag
         gitRepoRv.adapter = adapter
         viewModel.pageStatus.observe(context, Observer<String> { pageStatus ->
             when (pageStatus) {
-                PageStatus.START_LOAD_PAGE_DATA, PageStatus.STAT_LOAD_MORE -> {
+                PageStatus.START_LOAD_PAGE_DATA, PageStatus.START_LOAD_MORE -> {
                     gitRepoProgress.visibility = View.VISIBLE
                 }
                 PageStatus.END_LOAD_PAGE_DATA, PageStatus.END_LOAD_MORE -> {

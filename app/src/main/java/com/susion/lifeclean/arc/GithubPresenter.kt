@@ -1,21 +1,19 @@
 package com.susion.lifeclean.arc
 
+import com.susion.lifeclean.common.PageStatus
+import com.susion.lifeclean.common.protocol.SimpleRvPageProtocol
+import com.susion.lifeclean.Action
+import com.susion.lifeclean.LifePresenter
+import com.susion.lifeclean.State
+import com.susion.lifeclean.rx.disposeOnDestroy
 import com.susion.lifeclean.api.GithubService
-import com.susion.lifeclean.core.Action
-import com.susion.lifeclean.core.LifePresenter
-import com.susion.lifeclean.core.State
-import com.susion.lifeclean.core.disposeOnDestroy
-import com.susion.lifeclean.extensions.protocol.PageStatus
-import com.susion.lifeclean.extensions.protocol.SimplePageProtocol
-import com.susion.lifeclean.mvp.LoadData
-import com.susion.lifeclean.mvp.SimpleMvpStatus
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 /**
  * create by susionwang at 2019-12-08
  */
-class GithubPresenter(val view: SimplePageProtocol) : LifePresenter() {
+class GithubPresenter(val view: SimpleRvPageProtocol) : LifePresenter() {
 
     private val apiService = GithubService.create()
     private val IN_QUALIFIER = "in:name,description"
@@ -24,14 +22,14 @@ class GithubPresenter(val view: SimplePageProtocol) : LifePresenter() {
 
     override fun dispatch(action: Action) {
         when (action) {
-            is LoadData -> {
+            is SimpleRvPageProtocol.LoadData -> {
                 loadSearchResult(action.searchWord, action.isLoadMore)
             }
         }
     }
 
     override fun <T : State> getStatus(): T? {
-        return SimpleMvpStatus(page) as? T
+        return SimpleRvPageProtocol.SimpleMvpStatus(page) as? T
     }
 
     private fun loadSearchResult(query: String, isLoadMore: Boolean = false) {
@@ -46,7 +44,7 @@ class GithubPresenter(val view: SimplePageProtocol) : LifePresenter() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe {
-                view.refreshPageStatus(if (isLoadMore) PageStatus.STAT_LOAD_MORE else PageStatus.START_LOAD_PAGE_DATA)
+                view.refreshPageStatus(if (isLoadMore) PageStatus.START_LOAD_MORE else PageStatus.START_LOAD_PAGE_DATA)
             }.doOnTerminate {
                 //doOnFinally : https://raw.githubusercontent.com/wiki/ReactiveX/RxJava/images/rx-operators/doFinally.o.png
                 //doOnTerminate : https://raw.github.com/wiki/ReactiveX/RxJava/images/rx-operators/doOnTerminate.o.png  -> 在onError之前调用

@@ -1,4 +1,4 @@
-package com.susion.lifeclean.extensions.recyclerview
+package com.susion.lifeclean.common.recyclerview
 
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +15,11 @@ abstract class DifferRvAdapter<T>(diffCallBack: DiffUtil.ItemCallback<T> = defau
     AdapterUIMappingProtocol<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CommonViewHolder(createItem(viewType))
+        return CommonViewHolder(
+            createItem(
+                viewType
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

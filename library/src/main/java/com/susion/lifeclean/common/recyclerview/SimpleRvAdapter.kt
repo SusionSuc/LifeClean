@@ -1,4 +1,4 @@
-package com.susion.lifeclean.extensions.recyclerview
+package com.susion.lifeclean.common.recyclerview
 
 import android.content.Context
 import android.view.View
@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.RecyclerView
  * 2. 只支持带有默认构造函数的View
  */
 class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>(), AdapterUIMappingProtocol<T> {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+    AdapterUIMappingProtocol<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CommonViewHolder(createItem(viewType))
+        return CommonViewHolder(
+            createItem(
+                viewType
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -52,10 +57,11 @@ class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T>) :
 
     /**
      * 会有异常， 必须提供一个 context的构造函数
-     *
      * */
     override fun createItem(type: Int): AdapterItemView<*> {
-        val viewClass = type2ViewMap[type] ?: return FakeHolderItemView<Any>(context)
+        val viewClass = type2ViewMap[type] ?: return FakeHolderItemView<Any>(
+            context
+        )
         val contextConstructor = viewClass.getDeclaredConstructor(Context::class.java)
         return contextConstructor.newInstance(context)
     }
@@ -73,7 +79,8 @@ class SimpleRvAdapter<T : Any>(val context: Context, val data: MutableList<T>) :
         return result
     }
 
-    class FakeHolderItemView<F>(context: Context) : View(context), AdapterItemView<F> {
+    class FakeHolderItemView<F>(context: Context) : View(context),
+        AdapterItemView<F> {
         override fun bindData(data: F, position: Int) {
         }
     }

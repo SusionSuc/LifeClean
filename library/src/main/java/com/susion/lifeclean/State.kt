@@ -1,4 +1,4 @@
-package com.susion.lifeclean.core
+package com.susion.lifeclean
 
 /**
  * susionwang at 2019-12-10

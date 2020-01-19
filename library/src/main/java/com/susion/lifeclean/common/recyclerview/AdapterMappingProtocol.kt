@@ -1,10 +1,10 @@
-package com.susion.lifeclean.extensions.recyclerview
+package com.susion.lifeclean.common.recyclerview
 
 /**
  * susionwang at 2019-12-09
  * 数据 -> Type -> View
  */
-interface AdapterUIMappingProtocol<T> {
+internal interface AdapterUIMappingProtocol<T> {
 
     //数据 ——> Type
     fun getItemType(data: T): Int

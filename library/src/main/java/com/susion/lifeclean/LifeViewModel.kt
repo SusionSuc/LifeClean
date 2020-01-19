@@ -1,14 +1,14 @@
-package com.susion.lifeclean.core
+package com.susion.lifeclean
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModel
 import java.lang.ref.WeakReference
 
 /**
  * susionwang at 2019-12-10
- *
- * Presenter一般都需要一个Page, 可以更新UI
+ * 带有生命周期组件的ViewModel, 使用[LifeClean]来创建
  */
-abstract class LifePresenter(lifePage: LifePage? = null) : Presenter {
+open class LifeViewModel : ViewModel() {
 
     private var lifeOwnerReference = WeakReference<LifecycleOwner>(null)
 
@@ -18,8 +18,5 @@ abstract class LifePresenter(lifePage: LifePage? = null) : Presenter {
         lifeOwnerReference = WeakReference(lifecycleOwner)
     }
 
-    override fun <T : State> getStatus(): T? {
-        return null
-    }
-
 }
+
