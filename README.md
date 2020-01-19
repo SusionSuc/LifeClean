@@ -1,4 +1,12 @@
 
+# 引入方法
+
+```
+implementation 'com.susion:life-clean:1.0.1'
+```
+
+# 介绍
+
 `LifeClean`提供了一个稳定、简单的方式来组织你的Android代码,主要有以下特点:
 
 1. 为`Presenter`和`ViewModel`提供生命周期组件`LifeOwner`, 使`View`具有感知`Activity`生命周期的能力

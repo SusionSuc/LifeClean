@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 .idea/*
+
+.settings/*
+
+**/.settings/
+
