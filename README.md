@@ -9,11 +9,12 @@ implementation 'com.susion:life-clean:1.0.1'
 
 `LifeClean`提供了一个稳定、简单的方式来组织你的Android代码,主要有以下特点:
 
-1. 为`Presenter`和`ViewModel`提供生命周期组件`LifeOwner`, 使`View`具有感知`Activity`生命周期的能力
-2. 新的`MVP`书写方式, `View`与`Presenter`完全解耦
-3. 摒弃`Fragment`, 基于``View`构建应用UI
-4. 提供`RxDisposeManager`,可以非常方便的释放`Disposable`,避免内存泄漏
-5. 规范页面的更新状态、统一`RcyclerView`的用法
+1. 为`Presenter`和`ViewModel`提供生命周期组件`LifeOwner`
+2. 使`View`具有感知`Activity`生命周期的能力
+3. 新的`MVP`书写方式, `View`与`Presenter`完全解耦
+4. 摒弃`Fragment`, 基于``View`构建应用UI
+5. 提供`RxDisposeManager`,可以非常方便的释放`Disposable`,避免内存泄漏
+6. 规范页面的更新状态、统一`RcyclerView`的用法
 
 **`LifeClean`的目标是构建一份简单易维护的业务代码**
 
