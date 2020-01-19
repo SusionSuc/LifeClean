@@ -6,7 +6,7 @@ apply from: '../common-version.gradle'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.susion.lifecleanarchitecture"
+        applicationId "com.susion.lifeclea.demo"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
