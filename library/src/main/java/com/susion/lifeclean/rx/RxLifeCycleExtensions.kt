@@ -117,7 +117,10 @@ internal interface RequestRemoveLifecycleObserver {
 
 //在 LifecycleOwner onDestroy 时释放 disposable
 fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner?): Disposable? {
-    if (lifeOwner == null) return null
+    if (lifeOwner == null) {
+        Log.e(TAG, "null lifeOwner !!")
+        return null
+    }
     var lifecycleObserver = GlobalRxDisposeManager.getDestroyObserver(lifeOwner.toString())
 
     if (lifecycleObserver == null) {
@@ -132,7 +135,10 @@ fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner?): Disposable? {
 
 //在 LifecycleOwner onStop 时释放 disposable
 fun Disposable.disposeOnStop(lifeOwner: LifecycleOwner?): Disposable? {
-    if (lifeOwner == null) return null
+    if (lifeOwner == null) {
+        Log.e(TAG, "null lifeOwner !!")
+        return null
+    }
 
     var lifecycleObserver = GlobalRxDisposeManager.getStopObserver(lifeOwner.toString())
 
