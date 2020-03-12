@@ -2,7 +2,7 @@
 # 引入方法
 
 ```
-implementation 'com.susion:life-clean:1.0.2'
+implementation 'com.susion:life-clean:1.0.3'
 ```
 
 # 介绍
