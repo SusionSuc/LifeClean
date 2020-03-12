@@ -32,11 +32,17 @@ object LifeClean {
     }
 
     /**
-     * 实例化一个基于View构建的页面
-     * 必须含有 construct(context) 的构造函数
+     * 实例化的类必须继承自[LifePage]  && 含有 construct(context) 的构造函数
      * */
     inline fun <reified T : LifePage> createPage(activity: AppCompatActivity): T {
         return PageFactory(activity).create(T::class.java)
+    }
+
+    /**
+     *实例化[LifePresenter], 必须串如LifeCycle -> AppCompatActivity 。如果不需要生命周期的话可以直接继承自 [Presenter],使用普通的构造方法
+     * */
+    inline fun <reified T : LifePresenter> createPresenter(activity: AppCompatActivity): T {
+        return PresenterFactory(activity).create(T::class.java)
     }
 
     /**
@@ -60,6 +66,19 @@ object LifeClean {
     ): T {
         return PresenterFactory(activity)
             .create(T::class.java, params1, params2)
+    }
+
+    /**
+     * 实例化带有三个任意类型参数的[LifePresenter]
+     * */
+    inline fun <reified T : LifePresenter, reified P1 : Any, reified P2 : Any,reified P3 : Any> createPresenter(
+        activity: AppCompatActivity,
+        params1: P1,
+        params2: P2,
+        params3: P3
+    ): T {
+        return PresenterFactory(activity)
+            .create(T::class.java, params1, params2,params3)
     }
 
     /**
@@ -120,6 +139,16 @@ object LifeClean {
      * */
     class PresenterFactory(val activity: AppCompatActivity) {
 
+        inline fun <reified T : LifePresenter> create(presenterClass: Class<T>): T {
+            if (LifePresenter::class.java.isAssignableFrom(presenterClass)) {
+                val obj = presenterClass.getConstructor().newInstance()
+                (obj as LifePresenter).injectLifeOwner(activity)
+                return obj
+            }
+            throw IllegalArgumentException("Page Must Is Child of LifePage")
+        }
+
+
         inline fun <reified T : LifePresenter, reified P : Any> create(
             presenterClass: Class<T>,
             param: P
@@ -140,6 +169,21 @@ object LifeClean {
             if (LifePresenter::class.java.isAssignableFrom(presenterClass)) {
                 val obj = presenterClass.getConstructor(P1::class.java, P2::class.java)
                     .newInstance(param1, param2)
+                (obj as LifePresenter).injectLifeOwner(activity)
+                return obj
+            }
+            throw IllegalArgumentException("Page Must Is Child of LifePage")
+        }
+
+        inline fun <reified T : LifePresenter, reified P1 : Any, reified P2 : Any, reified P3 : Any> create(
+            presenterClass: Class<T>,
+            param1: P1,
+            param2: P2,
+            param3: P3
+        ): T {
+            if (LifePresenter::class.java.isAssignableFrom(presenterClass)) {
+                val obj = presenterClass.getConstructor(P1::class.java, P2::class.java, P3::class.java)
+                    .newInstance(param1, param2, param3)
                 (obj as LifePresenter).injectLifeOwner(activity)
                 return obj
             }

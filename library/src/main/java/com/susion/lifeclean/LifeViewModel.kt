@@ -1,5 +1,6 @@
 package com.susion.lifeclean
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import java.lang.ref.WeakReference
@@ -10,13 +11,15 @@ import java.lang.ref.WeakReference
  */
 open class LifeViewModel : ViewModel() {
 
-    private var lifeOwnerReference = WeakReference<LifecycleOwner>(null)
+    private var lifeOwnerReference = WeakReference<AppCompatActivity>(null)
 
     fun getLifeOwner() = lifeOwnerReference.get()
 
-    fun injectLifeOwner(lifecycleOwner: LifecycleOwner) {
+    fun injectLifeOwner(lifecycleOwner: AppCompatActivity) {
         lifeOwnerReference = WeakReference(lifecycleOwner)
     }
+
+    fun getContext() = lifeOwnerReference.get()
 
 }
 

@@ -171,13 +171,13 @@ class GithubPresenter(val view: SimpleRvPageProtocol) : LifePresenter() {
 现在使用`RxJava`来开发`app`基本已成为主流,为了解决`RxJava`的内存泄漏问题, `LifeClean`提供了`RxDisposeManager`,具体用法如下:
 
 ```
-  apiService
-        .searchRepos(query + IN_QUALIFIER, requestPage, PAGE_SIZE)
-        .subscribe({
-            ...
-        }, {
-            ...
-        }).disposeOnDestroy(getLifeOwner())
+    apiService
+    .searchRepos(query + IN_QUALIFIER, requestPage, PAGE_SIZE)
+    .subscribe({
+        ...
+    }, {
+        ...
+    }).disposeOnDestroy(getLifeOwner())
 ```
 
 即调用`disposeOnDestroy(getLifeOwner())`,`disposeOnDestroy()`接收的参数是`LifeOwner`。它会观察`LifeOwner`的生命周期事件并及时释放掉`Disposable`
@@ -256,7 +256,10 @@ class GitRepoView(context: Context) : AdapterItemView<Repo>, ConstraintLayout(co
 }
 ```
 
->对于`ItemView`做这种限制的原因是因为: 不希望把`ItemView`渲染的代码写在页面中，比如`Activity`。
+>对于`ItemView`做这种限制的原因是因为: 
+
+1. 不希望把`ItemView`渲染的代码写在页面中，比如`Activity`
+2. 解耦代码易维护
 
 ## 使用`SimpleRvAdapter`
 
