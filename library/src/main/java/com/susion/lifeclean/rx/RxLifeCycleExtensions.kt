@@ -1,6 +1,8 @@
 package com.susion.lifeclean.rx
 
+import android.content.Context
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -118,6 +120,24 @@ internal interface RequestRemoveLifecycleObserver {
 //在 LifecycleOwner onDestroy 时释放 disposable
 fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner?): Disposable? {
     if (lifeOwner == null) {
+        Log.e(TAG, "null lifeOwner !!")
+        return null
+    }
+    var lifecycleObserver = GlobalRxDisposeManager.getDestroyObserver(lifeOwner.toString())
+
+    if (lifecycleObserver == null) {
+        lifecycleObserver = DestroyLifeCycleObserver(lifeOwner)
+        GlobalRxDisposeManager.addDestroyObserver(lifecycleObserver)
+    }
+
+    lifecycleObserver.addDisposable(this)
+
+    return this
+}
+
+//在 LifecycleOwner onDestroy 时释放 disposable
+fun Disposable.disposeOnDestroy(lifeOwner: Context?): Disposable? {
+    if (lifeOwner == null || lifeOwner !is AppCompatActivity) {
         Log.e(TAG, "null lifeOwner !!")
         return null
     }
