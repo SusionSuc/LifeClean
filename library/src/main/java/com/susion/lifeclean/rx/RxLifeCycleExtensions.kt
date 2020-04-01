@@ -136,7 +136,7 @@ fun Disposable.disposeOnDestroy(lifeOwner: LifecycleOwner?): Disposable? {
 }
 
 //在 LifecycleOwner onDestroy 时释放 disposable
-fun Disposable.disposeOnDestroy(lifeOwner: Context?): Disposable? {
+fun Disposable.disposeOnDestroyByContext(lifeOwner: Context?): Disposable? {
     if (lifeOwner == null || lifeOwner !is AppCompatActivity) {
         Log.e(TAG, "null lifeOwner !!")
         return null
