@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import com.susion.lifeclean.common.recyclerview.AdapterItemView
 import com.susion.lifeclean.demo.test.SimplePageContainerActivity
 import com.susion.lifeclean.demo.adapter.AdapterTestActivity
@@ -18,7 +19,7 @@ import com.susion.lifeclean.demo.mvvm.SimpleMvvmActivity
 
 class SimpleDescInfo(val desc: String)
 
-class SimpleDescView(context: Context) : TextView(context), AdapterItemView<SimpleDescInfo> {
+class SimpleDescView(context: Context) : AppCompatTextView(context), AdapterItemView<SimpleDescInfo> {
 
     init {
         layoutParams = ViewGroup.LayoutParams(

@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.util.TypedValue
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import com.susion.lifeclean.common.recyclerview.AdapterItemView
 import com.susion.lifeclean.demo.test.SimplePageContainerActivity
 import com.susion.lifeclean.demo.adapter.AdapterTestActivity
@@ -29,7 +30,7 @@ class SimpleTitleInfo(val title: String) {
     }
 }
 
-class SimpleTitleView(context: Context) : TextView(context), AdapterItemView<SimpleTitleInfo> {
+class SimpleTitleView(context: Context) : AppCompatTextView(context), AdapterItemView<SimpleTitleInfo> {
 
     init {
 
