@@ -1,51 +1,38 @@
 package com.susion.lifeclean.demo
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.susion.lifeclean.demo.adapter.AdapterTestActivity
-import com.susion.lifeclean.demo.mvp.SimpleMvpActivity
-import com.susion.lifeclean.demo.mvvm.SimpleMvvmActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.susion.lifeclean.common.recyclerview.SimpleRvAdapter
+import com.susion.lifeclean.demo.view.SimpleTitleInfo
+import com.susion.lifeclean.demo.view.SimpleTitleView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    val adapter by lazy {
+        SimpleRvAdapter<SimpleTitleInfo>(this).apply {
+            registerMapping(SimpleTitleInfo::class.java, SimpleTitleView::class.java)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mMainAcRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter.data.addAll(getAllTitleInfo())
+        mMainAcRv.adapter = adapter
+    }
 
-        mainAcTvSimpleMvp.setOnClickListener {
-            startActivity(Intent(this, SimpleMvpActivity::class.java))
+    private fun getAllTitleInfo(): List<SimpleTitleInfo> {
+        return ArrayList<SimpleTitleInfo>().apply {
+            add(SimpleTitleInfo(SimpleTitleInfo.AC_MVP))
+            add(SimpleTitleInfo(SimpleTitleInfo.AC_MVVM))
+            add(SimpleTitleInfo(SimpleTitleInfo.PAGE_MVP))
+            add(SimpleTitleInfo(SimpleTitleInfo.PAGE_MVVM))
+            add(SimpleTitleInfo(SimpleTitleInfo.ADAPTER))
+            add(SimpleTitleInfo(SimpleTitleInfo.LIFE_PAGE))
+            add(SimpleTitleInfo(SimpleTitleInfo.MERGE_ADAPTER))
         }
-
-        mainAcTvSimpleMvvm.setOnClickListener {
-            startActivity(Intent(this, SimpleMvvmActivity::class.java))
-        }
-
-        mainAcTvAdapter.setOnClickListener {
-            startActivity(Intent(this, AdapterTestActivity::class.java))
-        }
-
-        mainAcTvSimpleMvpPage.setOnClickListener {
-            SimplePageContainerActivity.start(
-                this,
-                SimplePageContainerActivity.MVP
-            )
-        }
-
-        mainAcTvSimpleMvvmPage.setOnClickListener {
-            SimplePageContainerActivity.start(
-                this,
-                SimplePageContainerActivity.MVVM
-            )
-        }
-
-        mainAcTvSimpleLifePage.setOnClickListener {
-            SimplePageContainerActivity.start(
-                this,
-                SimplePageContainerActivity.LIFE
-            )
-        }
-
     }
 }

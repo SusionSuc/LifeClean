@@ -71,14 +71,14 @@ object LifeClean {
     /**
      * 实例化带有三个任意类型参数的[LifePresenter]
      * */
-    inline fun <reified T : LifePresenter, reified P1 : Any, reified P2 : Any,reified P3 : Any> createPresenter(
+    inline fun <reified T : LifePresenter, reified P1 : Any, reified P2 : Any, reified P3 : Any> createPresenter(
         activity: AppCompatActivity,
         params1: P1,
         params2: P2,
         params3: P3
     ): T {
         return PresenterFactory(activity)
-            .create(T::class.java, params1, params2,params3)
+            .create(T::class.java, params1, params2, params3)
     }
 
     /**
@@ -182,8 +182,9 @@ object LifeClean {
             param3: P3
         ): T {
             if (LifePresenter::class.java.isAssignableFrom(presenterClass)) {
-                val obj = presenterClass.getConstructor(P1::class.java, P2::class.java, P3::class.java)
-                    .newInstance(param1, param2, param3)
+                val obj =
+                    presenterClass.getConstructor(P1::class.java, P2::class.java, P3::class.java)
+                        .newInstance(param1, param2, param3)
                 (obj as LifePresenter).injectLifeOwner(activity)
                 return obj
             }

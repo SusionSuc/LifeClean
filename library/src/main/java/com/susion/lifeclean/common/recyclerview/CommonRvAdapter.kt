@@ -13,11 +13,9 @@ abstract class CommonRvAdapter<T>(val data: MutableList<T> = ArrayList()) :
     AdapterUIMappingProtocol<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CommonViewHolder(
-            createItem(
-                viewType
-            )
-        )
+        val item = createItem(viewType)
+            ?: throw RuntimeException("AdapterUIMappingProtocol.createItem cannot return null")
+        return CommonViewHolder(item)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -32,7 +30,7 @@ abstract class CommonRvAdapter<T>(val data: MutableList<T> = ArrayList()) :
         return getItemType(data[position])
     }
 
-    private class CommonViewHolder<T> internal constructor(var item: AdapterItemView<T>) :
+    protected class CommonViewHolder<T> internal constructor(var item: AdapterItemView<T>) :
         RecyclerView.ViewHolder(if (item is View) item else throw RuntimeException("item view must is view"))
 
 }

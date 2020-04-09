@@ -1,4 +1,4 @@
-package com.susion.lifeclean.demo
+package com.susion.lifeclean.demo.test
 
 import android.content.Context
 import android.content.Intent

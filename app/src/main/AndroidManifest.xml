@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SimplePageContainerActivity"></activity>
+        <activity android:name=".test.MergeAdapterTestActivity"></activity>
+        <activity android:name=".test.SimplePageContainerActivity" />
         <activity android:name=".adapter.AdapterTestActivity" />
         <activity android:name=".mvvm.SimpleMvvmActivity" />
         <activity android:name=".mvp.SimpleMvpActivity" />

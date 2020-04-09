@@ -4,13 +4,17 @@ package com.susion.lifeclean.common.recyclerview
  * susionwang at 2019-12-09
  * 数据 -> Type -> View
  */
-internal interface AdapterUIMappingProtocol<T> {
+interface AdapterUIMappingProtocol<T> {
 
     //数据 ——> Type
     fun getItemType(data: T): Int
 
     // Type -> View
-    fun createItem(type: Int): AdapterItemView<*>
+    fun createItem(type: Int): AdapterItemView<*>?
+
+    companion object {
+        const val ERROR_ITEM_TYPE = -1
+    }
 }
 
 /**

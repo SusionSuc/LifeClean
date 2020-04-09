@@ -14,8 +14,6 @@ abstract class LifePresenter : Presenter {
 
     fun getLifeOwner() = lifeOwnerReference.get()
 
-    fun getContext() =  lifeOwnerReference.get()
-
     fun injectLifeOwner(lifecycleOwner: AppCompatActivity) {
         lifeOwnerReference = WeakReference(lifecycleOwner)
     }

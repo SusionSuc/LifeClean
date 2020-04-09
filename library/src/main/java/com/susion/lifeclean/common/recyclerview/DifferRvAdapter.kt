@@ -15,11 +15,9 @@ abstract class DifferRvAdapter<T>(diffCallBack: DiffUtil.ItemCallback<T> = defau
     AdapterUIMappingProtocol<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return CommonViewHolder(
-            createItem(
-                viewType
-            )
-        )
+        val item = createItem(viewType)
+            ?: throw RuntimeException("AdapterUIMappingProtocol.createItem cannot return null")
+        return CommonViewHolder(item)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -18,4 +18,5 @@ open class LifeAndroidViewModel(application: Application) : AndroidViewModel(app
     fun injectLifeOwner(lifecycleOwner: LifecycleOwner) {
         lifeOwnerReference = WeakReference(lifecycleOwner)
     }
+
 }

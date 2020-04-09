@@ -11,4 +11,5 @@ class RvErrorView(context: Context) : View(context),
 
     override fun bindData(t: Any, position: Int) {
     }
+
 }

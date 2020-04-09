@@ -19,7 +19,5 @@ open class LifeViewModel : ViewModel() {
         lifeOwnerReference = WeakReference(lifecycleOwner)
     }
 
-    fun getContext() = lifeOwnerReference.get()
-
 }
 
