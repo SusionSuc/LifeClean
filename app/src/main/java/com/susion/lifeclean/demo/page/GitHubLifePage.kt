@@ -1,5 +1,6 @@
 package com.susion.lifeclean.demo.page
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.page_git_repo.view.*
  * susionwang at 2019-12-11
  * 带有生命周期的Page, 可以接收[Activity]的生命周期事件
  */
-class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),
+class GitHubLifePage(context: AppCompatActivity, id: String) : FrameLayout(context),
     LifePage {
 
     private val TAG = javaClass.simpleName
@@ -41,9 +42,9 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),
         ArrayList()
     )
         .apply {
-        registerMapping(String::class.java, SimpleStringView::class.java)
-        registerMapping(Repo::class.java, GitRepoView::class.java)
-    }
+            registerMapping(String::class.java, SimpleStringView::class.java)
+            registerMapping(Repo::class.java, GitRepoView::class.java)
+        }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.page_git_repo, this)
@@ -79,6 +80,8 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),
                 }
             }
         })
+
+        Log.d(TAG, "id is :$id")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

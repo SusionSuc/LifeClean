@@ -38,8 +38,9 @@ class SimplePageContainerActivity : AppCompatActivity() {
             MVVM -> GitRepoMvvmPage(
                 this
             )
-            LIFE -> LifeClean.createPage<GitHubLifePage>(
-                this
+            LIFE -> LifeClean.createPage<GitHubLifePage, String>(
+                this,
+                "111"
             )
             else -> View(this)
         }

@@ -33,4 +33,10 @@ abstract class CommonRvAdapter<T>(val data: MutableList<T> = ArrayList()) :
     protected class CommonViewHolder<T> internal constructor(var item: AdapterItemView<T>) :
         RecyclerView.ViewHolder(if (item is View) item else throw RuntimeException("item view must is view"))
 
+    fun updateUiWithNewDataList(list: List<T>) {
+        data.clear()
+        data.addAll(list)
+        notifyDataSetChanged()
+    }
+
 }

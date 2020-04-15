@@ -11,7 +11,7 @@ import com.susion.lifeclean.LifeClean
 import com.susion.lifeclean.common.PageStatus
 import com.susion.lifeclean.common.protocol.SimpleRvPageProtocol
 import com.susion.lifeclean.common.recyclerview.SimpleRvAdapter
-import com.susion.lifeclean.LifePresenter
+import com.susion.lifeclean.Presenter
 import com.susion.lifeclean.demo.R
 import com.susion.lifeclean.demo.api.Repo
 import com.susion.lifeclean.demo.arc.GithubPresenter
@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.page_git_repo.view.*
  */
 class GitRepoMvpPage(context: AppCompatActivity) : SimpleRvPageProtocol, FrameLayout(context) {
 
-    private val presenter: LifePresenter by lazy {
+    private val presenter: Presenter by lazy {
         LifeClean.createPresenter<GithubPresenter, SimpleRvPageProtocol>(context, this)
     }
 

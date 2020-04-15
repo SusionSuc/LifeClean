@@ -32,10 +32,20 @@ object LifeClean {
     }
 
     /**
-     * 实例化的类必须继承自[LifePage]  && 含有 construct(context) 的构造函数
+     * 实例化的类必须继承自[LifePage]  && 含有 construct(AppCompatActivity) 的构造函数
      * */
     inline fun <reified T : LifePage> createPage(activity: AppCompatActivity): T {
         return PageFactory(activity).create(T::class.java)
+    }
+
+    /**
+     * 实例化的类必须继承自[LifePage]  && 含有 construct(AppCompatActivity, Any) 的构造函数
+     * */
+    inline fun <reified T : LifePage, reified P : Any> createPage(
+        activity: AppCompatActivity,
+        params1: P
+    ): T {
+        return PageFactory(activity).create(T::class.java, params1)
     }
 
     /**
@@ -107,11 +117,11 @@ object LifeClean {
 
     /**
      * 构造一个LifePage, 可以感知Activity的生命周期
-     * 必须含有一个构造函数 : construct(context)
      * */
     class PageFactory(val activity: AppCompatActivity) {
 
-        fun <T : LifePage?> create(pageClass: Class<T>): T {
+        //必须含有一个构造函数 : construct(AppCompatActivity)
+        inline fun <reified T : LifePage> create(pageClass: Class<T>): T {
             if (LifePage::class.java.isAssignableFrom(pageClass)) {
                 val obj =
                     pageClass.getConstructor(AppCompatActivity::class.java).newInstance(activity)
@@ -130,6 +140,31 @@ object LifeClean {
                 return obj
             }
 
+            throw IllegalArgumentException("Page Must Is Child of LifePage")
+        }
+
+        inline fun <reified T : LifePage, reified P : Any> create(
+            presenterClass: Class<T>,
+            param: P
+        ): T {
+            if (LifePage::class.java.isAssignableFrom(presenterClass)) {
+                val obj =
+                    presenterClass.getConstructor(AppCompatActivity::class.java, P::class.java)
+                        .newInstance(activity, param)
+                activity.lifecycle.addObserver(obj as LifePage)
+                if (obj is View) {
+                    obj.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+                        override fun onViewDetachedFromWindow(v: View?) {
+                            activity.lifecycle.removeObserver(obj as LifePage)
+                        }
+
+                        override fun onViewAttachedToWindow(v: View?) {
+                            activity.lifecycle.addObserver(obj as LifePage)
+                        }
+                    })
+                }
+                return obj
+            }
             throw IllegalArgumentException("Page Must Is Child of LifePage")
         }
     }

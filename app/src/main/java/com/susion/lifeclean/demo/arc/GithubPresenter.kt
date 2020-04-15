@@ -1,5 +1,6 @@
 package com.susion.lifeclean.demo.arc
 
+import android.util.Log
 import com.susion.lifeclean.common.PageStatus
 import com.susion.lifeclean.common.protocol.SimpleRvPageProtocol
 import com.susion.lifeclean.Action
@@ -15,6 +16,7 @@ import io.reactivex.schedulers.Schedulers
  */
 class GithubPresenter(val view: SimpleRvPageProtocol) : LifePresenter() {
 
+    private val TAG = javaClass.simpleName
     private val apiService = GithubService.create()
     private val IN_QUALIFIER = "in:name,description"
     private var page = 0
@@ -61,5 +63,31 @@ class GithubPresenter(val view: SimpleRvPageProtocol) : LifePresenter() {
                 view.refreshPageStatus(PageStatus.NET_ERROR)
             }).disposeOnDestroy(getLifeOwner())
     }
+
+
+    override fun onActivityCreate() {
+        Log.d(TAG, "onActivityCreate")
+    }
+
+    override fun onActivityStart() {
+        Log.d(TAG, "onActivityStart")
+    }
+
+    override fun onActivityResume() {
+        Log.d(TAG, "onActivityResume")
+    }
+
+    override fun onActivityPause() {
+        Log.d(TAG, "onActivityPause")
+    }
+
+    override fun onActivityStop() {
+        Log.d(TAG, "onActivityStop")
+    }
+
+    override fun onActivityDestroy() {
+        Log.d(TAG, "onActivityDestroy")
+    }
+
 
 }

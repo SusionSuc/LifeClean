@@ -14,13 +14,13 @@ import kotlinx.android.synthetic.main.activity_merge_adapter_test.*
 
 class MergeAdapterTestActivity : AppCompatActivity() {
 
-    private val adapterTitle by lazy {
+    private val titleAdapter by lazy {
         SimpleRvAdapter<Any>(this).apply {
             registerMapping(SimpleTitleInfo::class.java, SimpleTitleView::class.java)
         }
     }
 
-    private val adapterDesc by lazy {
+    private val descAdapter by lazy {
         SimpleRvAdapter<Any>(this).apply {
             registerMapping(SimpleDescInfo::class.java, SimpleDescView::class.java)
         }
@@ -28,8 +28,8 @@ class MergeAdapterTestActivity : AppCompatActivity() {
 
     private val mergeAdapter by lazy {
         MergeAdapter(
-            adapterTitle,
-            adapterDesc
+            titleAdapter,
+            descAdapter
         )
     }
 
@@ -43,12 +43,12 @@ class MergeAdapterTestActivity : AppCompatActivity() {
 //            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mergeAdapter.data.addAll(dataList())
         mMergeAdapterTestAcRv.adapter = mergeAdapter
-//        mMergeAdapterTestAcRv2.adapter = adapterDesc
+//        mMergeAdapterTestAcRv2.adapter = descAdapter
 
 //        mMergeAdapterTestAcRv2.postDelayed({
-//            adapterDesc.data.add(SimpleDescInfo("描述三"))
-//            adapterDesc.data.add(SimpleDescInfo("描述四"))
-//            adapterDesc.notifyDataSetChanged()
+//            descAdapter.data.add(SimpleDescInfo("描述三"))
+//            descAdapter.data.add(SimpleDescInfo("描述四"))
+//            descAdapter.notifyDataSetChanged()
 //        }, 3000)
 
     }

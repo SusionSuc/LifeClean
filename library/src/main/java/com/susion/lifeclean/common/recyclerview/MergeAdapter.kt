@@ -1,7 +1,5 @@
 package com.susion.lifeclean.common.recyclerview
 
-import android.util.Log
-
 /**
  * susionwang at 2020-04-09
  * 组合多个Adapter映射, 支持组合 [CommonRvAdapter][SimpleRvAdapter]
@@ -29,10 +27,8 @@ class MergeAdapter<T>() : CommonRvAdapter<T>(), AdapterUIMappingProtocol<T> {
      * 按照Adapter顺序，搜索第一个映射了这个数据的Adapter Item Type
      * */
     override fun getItemType(data: T): Int {
-        Log.d("merge-adapter", "adapterList size : ${adapterList.size}")
         for (adapter in adapterList) {
             val type = adapter.getItemType(data)
-            Log.d("merge-adapter", "view type is $type ")
             if (type != AdapterUIMappingProtocol.ERROR_ITEM_TYPE) {
                 return type
             }
