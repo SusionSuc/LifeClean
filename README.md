@@ -19,15 +19,17 @@ implementation 'com.susion:life-clean:1.0.6'
 
 个人认为`MVP`主要是用来做职责分离的, 即`Presenter`负责数据的加载逻辑, `View`负责数据的展示逻辑。
 
-传统`MVP`的写法是将`Presenter`和`View`都抽取出一个接口,然后实现类之间使用这两个接口做隔离,而在`LifeClean`中不会对每一个`Presenter`都抽取一个接口, `LifeClean`规定:
+传统`MVP`的写法是将`Presenter`和`View`都抽取出一个接口,然后实现类之间使用这两个接口做隔离。
+
+在`LifeClean`中不会对每一个`Presenter`都抽取一个接口, `LifeClean`规定:
 
 1. 所有的`Presenter`都应该遵守同一个约定(接口)
-2. 所有的`View`都应该依赖于抽象的`Presenter`接口来与`Presenter`交互
+2. 所有的`View`都应该使用`Presenter`接口来与`Presenter`交互
 
 >抽象的`Presenter`接口:
 
 ```
-// view 向 presenter 发出的事件信号
+// view 向 presenter 发出的事件(信号)
 interface Action
 
 //页面需要的状态
@@ -113,7 +115,7 @@ class GithubPresenter(val view: SimpleRvPageProtocol) : Presenter {
 }
 ```
 
-**在`LifeClean`中将`View`定义为业务的中心,将`Presenter`的能力(Action)都定义到了`View`(约定中)中,`Presenter`可以自己选择是否有这个能力, 即`View`完全解耦于`Presenter`**
+**在`LifeClean`中将`View`定义为业务的中心,将`Presenter`的能力(Action)都定义到了`View`(约定)中,`Presenter`可以自己选择性的处理这个`Action`, 即`View`完全解耦于`Presenter`**
 
 ## 为`Presenter/View`提供`LifeCycle`
 
@@ -133,9 +135,7 @@ class GithubPresenter(val view: SimpleRvPageProtocol) : LifePresenter() {
 }
 ```
 
-**继承`LifePresenter`, 然后复写`Activity`相关生命周期方法** 
-
->那为什么`LifePresenter`拥有`Activity`的生命周期呢? 可以看一下内部实现:
+**即继承`LifePresenter`, 然后复写`Activity`相关生命周期方法**, 那为什么`LifePresenter`拥有`Activity`的生命周期呢? 内部实现如下:
 
 ```
 abstract class LifePresenter : Presenter, LifecycleObserver {
@@ -154,9 +154,9 @@ abstract class LifePresenter : Presenter, LifecycleObserver {
 }
 ```
 
-即`LifePresenter`就是一个`LifecycleObserver`,它是`LifeCycle`的一个观察者。那`injectLifeOwner()`这个方法在哪里调用的呢?
+**即`LifePresenter`就是一个`LifecycleObserver`,它是`LifeCycle`的一个观察者**, 那`injectLifeOwner()`这个方法在哪里调用的呢?
 
-**在`LifeClean`中如果你想让`Presenter`具有`Activity`的生命周期,那么必须继承自`LifePresenter`, 并且使用`LifeClean`提供的模板方法来创建这个`Presenter`:**
+**其实在`LifeClean`中如果你想让`Presenter`感知`Activity`的生命周期,那么必须继承`LifePresenter`, 并且使用`LifeClean`提供的模板方法来创建这个`Presenter`:**
 
 ```
 class GitRepoMvpPage(context: AppCompatActivity) : SimpleRvPageProtocol, FrameLayout(context) {
@@ -166,12 +166,12 @@ class GitRepoMvpPage(context: AppCompatActivity) : SimpleRvPageProtocol, FrameLa
 }
 ```
 
-`LifeClean.createPresenter()`会通过反射来构造`GithubPresenter`并调用`injectLifeOwner()`,使`GithubPresenter`可以观察`Activity`的生命周期。
+`LifeClean.createPresenter()`会通过反射来构造`GithubPresenter`并调用`injectLifeOwner()`,使`GithubPresenter`可以感知`Activity`的生命周期。
 
 
 ### 为View提供Activity的生命周期
 
-这里的`View`特指使用`ViewGroup`实现的页面,不过由于多继承的问题,在`LifeClean`中`View`观察`Activity`的生命周期的用法与`Presenter`并不相同。
+这里的`View`特指使用`ViewGroup`实现的页面,不过由于多继承的问题,在`LifeClean`中`View`感知`Activity`的生命周期的用法与`Presenter`并不相同。
 
 首先你的`ViewGroup`需要实现`LifePage`接口:
 
@@ -185,7 +185,7 @@ interface LifePage : LifecycleObserver
 val lifePage = LifeClean.createPage<GitHubLifePage>(activity)
 ```
 
-然后就可以观察`Activity`的生命周期了:
+然后就可以感知`Activity`的生命周期了:
 
 ```
 class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),LifePage {
@@ -205,7 +205,12 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),LifePage
 
 `LifeClean`提供了自动释放`Disposable`的方法:
 
->比如在LifePresenter中:
+```
+fun Disposable.disposeOnStop(lifeOwner: LifecycleOwner?): Disposable?
+```
+
+比如在LifePresenter中释放`Disposable`:
+
 ```
     apiService.searchRepos(query + IN_QUALIFIER, requestPage, PAGE_SIZE)
     .subscribe({...})
@@ -216,7 +221,7 @@ class GitHubLifePage(context: AppCompatActivity) : FrameLayout(context),LifePage
 
 # 规范`RecyclerView.Adapter`的使用方式 : 对象到View的映射
 
-**`LifeClean`中`RecyclerView.Adapter`应实现`AdapterDataToViewMapping`接口; `RecyclerView`的`ItemView`应实现`AdapterItemView`接口**:
+**`LifeClean`中`RecyclerView.Adapter`应实现`AdapterDataToViewMapping`接口, 它定义了对象与View的映射关系**:
 
 ```
 interface AdapterDataToViewMapping<T> {
@@ -226,7 +231,11 @@ interface AdapterDataToViewMapping<T> {
     // Type -> View
     fun createItem(type: Int): AdapterItemView<*>?
 }
+```
 
+**`RecyclerView`的`ItemView`应实现`AdapterItemView`接口,这样`ItemView`只需要拿到数据做UI渲染即可**:
+
+```
 interface AdapterItemView<T> {
     fun bindData(data: T, position: Int)
 }
@@ -234,9 +243,10 @@ interface AdapterItemView<T> {
 
 ### CommonRvAdapter
 
-`CommonRvAdapter`是`AdapterDataToViewMapping`的实现类。**它维护`Adapter`的数据集合,并且要求所有的`ItemView`都应该是`View`的子类**:
+`CommonRvAdapter`是`AdapterDataToViewMapping`的抽象实现类。**它要求所有的`ItemView`都应该是`View`的子类**:
 
 ```
+//data数据集合应该交给CommonRvAdapter维护
 abstract class CommonRvAdapter<T>(val data: MutableList<T> = ArrayList()) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     AdapterDataToViewMapping<T> {
@@ -321,3 +331,5 @@ object PageStatus {
 ``` 
 
 **遵循`LifeClean`的思想可以帮助你写出清晰、复用性高的业务代码。**
+
+更详细的使用细节请参考Demo。
