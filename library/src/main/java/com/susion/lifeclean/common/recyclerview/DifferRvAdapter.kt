@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
  */
 abstract class DifferRvAdapter<T>(diffCallBack: DiffUtil.ItemCallback<T> = defaultItemDiffCallback()) :
     ListAdapter<T, RecyclerView.ViewHolder>(diffCallBack),
-    AdapterUIMappingProtocol<T> {
+    AdapterDataToViewMapping<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val item = createItem(viewType)
-            ?: throw RuntimeException("AdapterUIMappingProtocol.createItem cannot return null")
+            ?: throw RuntimeException("AdapterDataToViewMapping.createItem cannot return null")
         return CommonViewHolder(item)
     }
 

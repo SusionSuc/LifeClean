@@ -10,11 +10,11 @@ import android.view.ViewGroup
  */
 abstract class CommonRvAdapter<T>(val data: MutableList<T> = ArrayList()) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(),
-    AdapterUIMappingProtocol<T> {
+    AdapterDataToViewMapping<T> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val item = createItem(viewType)
-            ?: throw RuntimeException("AdapterUIMappingProtocol.createItem cannot return null")
+            ?: throw RuntimeException("AdapterDataToViewMapping.createItem cannot return null")
         return CommonViewHolder(item)
     }
 

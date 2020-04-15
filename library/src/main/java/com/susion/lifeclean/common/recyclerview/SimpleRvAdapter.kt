@@ -2,9 +2,6 @@ package com.susion.lifeclean.common.recyclerview
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 
 /**
  * susionwang at 2019-12-09
@@ -13,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class SimpleRvAdapter<T : Any>(val context: Context, dataList: MutableList<T> = ArrayList()) :
     CommonRvAdapter<T>(dataList),
-    AdapterUIMappingProtocol<T> {
+    AdapterDataToViewMapping<T> {
 
     fun submitDatas(datas: List<T>, clear: Boolean = true) {
         if (clear) {
@@ -47,7 +44,7 @@ class SimpleRvAdapter<T : Any>(val context: Context, dataList: MutableList<T> = 
     }
 
     override fun getItemType(data: T): Int {
-        return data2TypeMap[data.javaClass.name] ?: AdapterUIMappingProtocol.ERROR_ITEM_TYPE
+        return data2TypeMap[data.javaClass.name] ?: AdapterDataToViewMapping.ERROR_ITEM_TYPE
     }
 
     private fun getTypeByHash(dataClass: Class<*>, viewClass: Class<out AdapterItemView<*>>): Int {

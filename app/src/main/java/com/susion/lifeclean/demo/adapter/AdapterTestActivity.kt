@@ -22,7 +22,7 @@ class AdapterTestActivity : AppCompatActivity() {
             registerMapping(SimpleInfo::class.java, SimpleInfoView::class.java)
         }
 
-//        val mappingProtocol = object : AdapterUIMappingProtocol<Any> {
+//        val mappingProtocol = object : AdapterDataToViewMapping<Any> {
 //            private val TYPE2 = 1
 //            private val TYPE1 = 0
 //

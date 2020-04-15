@@ -4,7 +4,7 @@ package com.susion.lifeclean.common.recyclerview
  * susionwang at 2019-12-09
  * 数据 -> Type -> View
  */
-interface AdapterUIMappingProtocol<T> {
+interface AdapterDataToViewMapping<T> {
 
     //数据 ——> Type
     fun getItemType(data: T): Int

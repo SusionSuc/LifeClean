@@ -6,20 +6,20 @@ package com.susion.lifeclean.common.recyclerview
  *
  * 多个Adapter不应该包含相同的 《数据-类型》 映射
  */
-class MergeAdapter<T>() : CommonRvAdapter<T>(), AdapterUIMappingProtocol<T> {
+class MergeAdapter<T>() : CommonRvAdapter<T>(), AdapterDataToViewMapping<T> {
 
     protected val TAG = javaClass.simpleName
-    private val adapterList: ArrayList<AdapterUIMappingProtocol<T>> = ArrayList()
+    private val adapterList: ArrayList<AdapterDataToViewMapping<T>> = ArrayList()
 
     constructor(
         dataList: List<T>,
-        vararg adapters: AdapterUIMappingProtocol<T>
+        vararg adapters: AdapterDataToViewMapping<T>
     ) : this() {
         data.addAll(dataList)
         adapterList.addAll(adapters)
     }
 
-    constructor(vararg adapters: AdapterUIMappingProtocol<T>) : this() {
+    constructor(vararg adapters: AdapterDataToViewMapping<T>) : this() {
         adapterList.addAll(adapters)
     }
 
@@ -29,11 +29,11 @@ class MergeAdapter<T>() : CommonRvAdapter<T>(), AdapterUIMappingProtocol<T> {
     override fun getItemType(data: T): Int {
         for (adapter in adapterList) {
             val type = adapter.getItemType(data)
-            if (type != AdapterUIMappingProtocol.ERROR_ITEM_TYPE) {
+            if (type != AdapterDataToViewMapping.ERROR_ITEM_TYPE) {
                 return type
             }
         }
-        return AdapterUIMappingProtocol.ERROR_ITEM_TYPE
+        return AdapterDataToViewMapping.ERROR_ITEM_TYPE
     }
 
     /**
